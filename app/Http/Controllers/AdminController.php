@@ -32,8 +32,9 @@ class AdminController extends Controller
         $siswas = Siswa::all();
         $users = User::where('role', 'siswa')->get();
         $data_siswa = Siswa::with('user')->get();
+        $data_siswa = Siswa::with('user')->paginate(5); // Tambahkan pagination di sini
 
-     return view('admin.data_siswa', compact('siswas', 'users', 'data_siswa'));
+        return view('admin.data_siswa', compact('siswas', 'users', 'data_siswa'));
     }
 
     public function siswaStore(Request $request)
@@ -74,7 +75,7 @@ class AdminController extends Controller
 
     public function siswaUpdate(Request $request, $id)
     {
-         dd($request->all());
+        dd($request->all());
         $siswa = Siswa::findOrFail($id);
         $user = $siswa->user;
 
